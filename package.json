@@ -33,7 +33,8 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
-    "rn-otp-timer": "^1.0.1"
+    "rn-otp-timer": "^1.0.1",
+    "expo-updates": "~0.14.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

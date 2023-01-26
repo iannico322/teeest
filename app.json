@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Project-UMAP-MP",
-    "slug": "Project-UMAP-MP",
+    "name": "Umap",
+    "slug": "Umap",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a0ce32ea-c60c-4a52-9080-ee84834afedc"
+      }
     }
   }
 }
