@@ -91,8 +91,7 @@ export const Dashboard = ({ navigation }) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1,
-      paddingTop: StatusBar.currentHeight,}}>
+    <SafeAreaView >
 
 
 

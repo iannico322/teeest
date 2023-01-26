@@ -7,7 +7,9 @@ import {
 import EventCard from '../../components/inputs/eventCard';
 import SchedCard from '../../components/inputs/schedCard';
 import { useSelector,useDispatch} from "react-redux";
+import { addSearch } from '../../cache/userSearch'
 const Calendar = () => {
+  const dispatch = useDispatch();
   const [date,setDate] = useState("Aprl 21");
 const [time,setTime] = useState("7:20 AM");
 const schedules = useSelector((state) => state.sched.value)
@@ -86,6 +88,18 @@ const [today,setToday] = useState("FRI")
         title = "Week Of Welcome"
         date = "JAN 29"
         time = "7:00AM - 10:00AM"
+        onPress={
+          ()=>{
+            dispatch(addSearch(
+              {
+                "buildingID":"16",
+                "room": "Week Of Welcome",
+                "floor": "JAN 29",
+                "block": "7:00AM - 10:00AM",
+              }
+            ))
+          }
+        }
       />
       {schedules.filter(e=>e.day == today).map((e,key)=>(
 
@@ -94,6 +108,19 @@ const [today,setToday] = useState("FRI")
           title = {e.title}
         
           time = {e.time}
+          onPress={
+            ()=>{
+              dispatch(addSearch(
+                {
+                  "buildingID":"9",
+                  "room": `${e.title}  | ${e.location}`,
+                  "floor": e.day,
+                  "block": e.time,
+                }
+                
+              ))
+            }
+          }
           />
       ))}
       

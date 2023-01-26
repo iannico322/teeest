@@ -5,8 +5,10 @@ import {rooms} from "./rooms"
 import Card from './card'
 import Xbtn from './../../assets/img/x.png'
 import Ybtn from './../../assets/img/Magnifier.png'
+import {  useDispatch } from 'react-redux';
+import { addSearch } from '../../cache/userSearch'
 export const SearchField = (props) => {
-
+  const dispatch = useDispatch();
   const [show,setshow] = useState("none")
   const [sel ,setsel] = useState(false)
   const [query, setQuery] = useState(''); // state to hold the search query
@@ -34,7 +36,7 @@ export const SearchField = (props) => {
       setsel(false)
     }
     
-    console.log("writiinnggggg")
+   
   },[query])
   const Inputs = StyleSheet.create({
     main:{
@@ -121,7 +123,14 @@ export const SearchField = (props) => {
         onPress={()=>{
           setQuery("")
           setimage(Ybtn)
-          props.onBuilding("")
+          dispatch(addSearch(
+            {
+              "buildingID":"1000",
+              "room": "",
+              "floor": "",
+              "block": "",
+            }
+          ))
 
 
 
@@ -149,12 +158,16 @@ export const SearchField = (props) => {
               setshow("none")
               setsel(true)
               setimage(Xbtn)
+              console.log(`${e.buildingNumber} 3`)
 
-
-              props.onBuilding(e.buildingNumber)
-              props.onRoom(e.roomName)
-              props.onFloor(`F ${e.floorNumber}`)
-              props.onBlock(`B ${e.blockNumber}`)
+              dispatch(addSearch(
+                {
+                  "buildingID":e.buildingNumber,
+                  "room": e.roomName,
+                  "floor": `F ${e.floorNumber}`,
+                  "block": `B ${e.blockNumber}`,
+                }
+              ))
             }}
               />
           ))

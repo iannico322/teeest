@@ -19,7 +19,7 @@ const EventCard = (props) => {
           <TouchableHighlight
           activeOpacity={.5}
           underlayColor="none"
-          onPress={()=>{console.log("loc")}}
+          onPress={props.onPress}
           >
           <Image
           source={PointLoc}

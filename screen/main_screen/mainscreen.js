@@ -4,15 +4,15 @@ import { StyleSheet, Animated, View, Image, Text, Easing } from "react-native";
 import { ButtonImage } from "../../components/btns/button1";
 import { ButtonText } from "../../components/btns/button2";
 export const MainScreen = ({ navigation }) => {
-  const cloudTransition = new Animated.Value(100); 
-  const boxTransition = new Animated.Value(-180); 
+  const cloudTransition = new Animated.Value(hp(15)); 
+  const boxTransition = new Animated.Value(hp(-25)); 
   const visibility = new Animated.Value(0);
   
 
   //Scroll up function
   const travelTop = () => {
     Animated.timing(cloudTransition, {
-      toValue: -590,
+      toValue: hp(-75),
       duration: 1200,
       easing: Easing.ease,
       useNativeDriver: true,
@@ -26,13 +26,11 @@ export const MainScreen = ({ navigation }) => {
     }).start();
 
     Animated.timing(boxTransition, {
-      toValue: 360,
+      toValue: hp(43),
       duration: 1200,
       easing: Easing.ease,
       useNativeDriver: true,
-    }).start(() => {
-      travelTop();
-    });
+    }).start();
   };
 
   const styles = StyleSheet.create({
@@ -69,6 +67,7 @@ export const MainScreen = ({ navigation }) => {
 
       <Animated.View style={styles.box}>
         <Animated.View
+        
           style={{
             opacity: visibility,
             marginBottom: hp(15),
@@ -123,6 +122,7 @@ export const MainScreen = ({ navigation }) => {
         </Animated.View>
 
         <Image
+        pointerEvents="none"
           style={{
             transform: [{ scale: 0.6 }, { translateY: -90 }],
             margin: 0,
@@ -132,6 +132,7 @@ export const MainScreen = ({ navigation }) => {
           source={require("../../assets/img/welcome.jpg")}
         />
         <Image
+        pointerEvents="none"
           style={{
             transform: [{ translateY: -hp(5)},{scale:1.7}],
             height: hp(30),
@@ -142,6 +143,7 @@ export const MainScreen = ({ navigation }) => {
         />
 
         <Image
+        pointerEvents="none"
           style={{
             transform: [{ translateY: -hp(10) }],
             height: hp(8),
@@ -152,6 +154,7 @@ export const MainScreen = ({ navigation }) => {
         />
       </Animated.View>
       <Animated.View style={styles.layer2}>
+
         <ButtonImage
           onPress={() => {
             travelTop();
@@ -160,6 +163,7 @@ export const MainScreen = ({ navigation }) => {
         />
 
         <Image
+        pointerEvents="none"
           style={{
             transform: [{ scale: 1.5 }],
             height: hp(43),

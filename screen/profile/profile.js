@@ -7,10 +7,12 @@ import {
 } from "react-native-responsive-screen";
 import XIcon from './../../assets/img/x2.png'
 import { useSelector,useDispatch} from "react-redux";
-import { addSchedule } from "../../cache/userSchedules";
+import { logout,addSchedule } from "../../cache/userSchedules";
 import { Navigation } from "../../components/navigation/navigation";
 import { IntputField } from "../../components/inputs/input";
 import ModalDropdown from 'react-native-modal-dropdown';
+import { addSearch } from '../../cache/userSearch'
+
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -250,7 +252,7 @@ const handleConfirm2 = (time) => {
               source={require("./../../assets/img/profile-pic.jpg")}
             />
 
-            <View style={{ marginLeft: 10 }}>
+            <View style={{ marginLeft: 10,width:"42%" }}>
               <Text
                 style={{ fontSize: 30, fontWeight: "bold", color: "#212121" }}
               >
@@ -258,17 +260,25 @@ const handleConfirm2 = (time) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 16,
+                
+                  fontSize: 13,
                   color: "#fdb417",
-                  transform: [{ translateY: -10 }],
+                  transform: [{ translateY: -4 }],
                 }}
               >
-               {credentials.email.slice(0,15)}
+               {credentials.email.slice(0,19)}
               </Text>
             </View>
             <View>
                 <TouchableHighlight style={{marginLeft:"10%",height:35,width:70,backgroundColor:"#fdb417",alignItems:"center",justifyContent:"center",borderRadius:10}}
                 onPress={()=>{console.log("logout")
+                dispatch(addSearch(
+                  {
+                   
+                  }
+                  
+                ))
+                dispatch(logout())
                 navigation.navigate("Login");
               }}
                 >
@@ -317,8 +327,27 @@ const handleConfirm2 = (time) => {
                 
               {schedules.map((e,key)=>(
 
+                  <TouchableHighlight
+                  key={key}
+                  activeOpacity={.5}
+                  underlayColor="none"
+                  onPress={()=>{
+                    console.log("heheh")
+                    dispatch(addSearch(
+                    {
+                      "buildingID":"9",
+                      "room": `${e.title}  | ${e.location}`,
+                      "floor": e.day,
+                      "block": e.time,
+                    }
+                    
+                  ))
+                navigation.navigate("Dashboard")
+                
+                }}
+                  >
                     <View
-                    key={key}
+                    
                     style={{
                       height: 140,
                       width: 140,
@@ -327,7 +356,6 @@ const handleConfirm2 = (time) => {
                       alignItems:"center",justifyContent:"center",borderRadius:20,overflow:"hidden",
                       borderWidth:1,borderColor:"#626262"
                     }}
-                    onPress={()=>{console.log("set Sched")}}
                     >
                       <View style={{alignItems:"center",height:"20%",width:"100%",justifyContent:"center",backgroundColor:"#fdb417"}}>
                          <Text style={{fontSize:13,color:"#f0f0f0"}}>{e.title}</Text>
@@ -347,6 +375,7 @@ const handleConfirm2 = (time) => {
                       </View>
                     
                     </View>
+                    </TouchableHighlight>
               ))}
              
             </View>

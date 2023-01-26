@@ -3,13 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userSchedules = createSlice({
   name: 'sched',
   initialState: {
-    value: [{
-      "title": " Mang Chicks ",
-      "location": "Computer Lab 305",
-      "day": "WED",
-      "time": "7:00am - 9:00am",
-    }
-  ],
+    value: [],
   },
   reducers: {
     logout: (state) => {
