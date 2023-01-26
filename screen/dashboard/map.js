@@ -9,14 +9,14 @@ const Map = (props) => {
     useEffect(()=>{
         switch (props.building) {
             case "9":
-                setBuildingName("ICT Building")
-                setCoordinates([47,-66])
+                setBuildingName("CICT Building")
+                setCoordinates([70,-56])
                 
                 
                 break;    
             case "23":
                 setBuildingName("LRC")
-                   setCoordinates([-120,-40]) 
+                   setCoordinates([-114,-47]) 
                 break;
             
         
@@ -35,8 +35,8 @@ const Map = (props) => {
               
             ],
       
-            height: 110,
-            width: 370,
+            height: 150,
+            width: 300,
             resizeMode: "contain",
           },
 

@@ -15,10 +15,10 @@ const [today,setToday] = useState("FRI")
 
 
 
-  // setInterval(()=>{
-  //   displayDateTime()
+  setInterval(()=>{
+    displayDateTime()
    
-  // },1000)
+  },1000)
 
 
 
@@ -27,10 +27,10 @@ const [today,setToday] = useState("FRI")
   
     let month = currentDateAndTime.getMonth();
     let day = currentDateAndTime.getDate();
-    const currentDay = currentDateAndTime.getDay();
-    const hours = currentDateAndTime.getHours();
-    const minutes = currentDateAndTime.getMinutes();
-    const seconds = currentDateAndTime.getSeconds();
+    let currentDay = currentDateAndTime.getDay();
+    let hours = currentDateAndTime.getHours();
+    let minutes = currentDateAndTime.getMinutes();
+    let seconds = currentDateAndTime.getSeconds();
     let amPm = 'AM';
   
   if (hours >= 12) {
@@ -75,7 +75,7 @@ const [today,setToday] = useState("FRI")
     <View style={{width:"70%",minHeight:"20%",backgroundColor:"blue",borderBottomRightRadius:10,borderTopEndRadius:10,overflow:"hidden"}}>
       
       <View style={{width:"100%",height:40,backgroundColor:"#fdb417",flexDirection:"row",alignItems:"center"}}>
-        <View style={{width:"20%",marginLeft:"5%"}}>
+        <View style={{width:"26%",marginLeft:"5%"}}>
           <Text style={{fontSize:11,fontWeight:"bold",color:"white"}}>{date}</Text>
           <Text style={{fontSize:10,color:"white"}}>{time}</Text>
         </View>
@@ -90,6 +90,7 @@ const [today,setToday] = useState("FRI")
       {schedules.filter(e=>e.day == today).map((e,key)=>(
 
         <SchedCard 
+          key={key}
           title = {e.title}
         
           time = {e.time}

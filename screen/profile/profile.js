@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-import { Image, SafeAreaView, ScrollView,StatusBar, Text, TouchableHighlight, View } from "react-native";
+import moment from 'moment';
+import { Button, Image, SafeAreaView, ScrollView,StatusBar, Text, TouchableHighlight, View } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,13 +11,13 @@ import { addSchedule } from "../../cache/userSchedules";
 import { Navigation } from "../../components/navigation/navigation";
 import { IntputField } from "../../components/inputs/input";
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const credentials = useSelector((state)=>state.user.value);
   const schedules = useSelector((state) => state.sched.value)
-  const [show,setShow] = useState("none")
-  const [selected, setSelected] = React.useState("");
+  const [show,setShow] = useState("flex")
+  
   const data = [
     {key:'1', value:'SUN'},
     {key:'2', value:'MON'},
@@ -29,17 +29,57 @@ const Profile = ({ navigation }) => {
 ]
 
 
-useEffect(()=>{
-  console.log(selected)
-},[selected])
+const [title,setTitle] = useState("")
+const [location,setLocation] = useState("")
+const [selectedday, setSelectedday] =useState("");
+const [timeStart,setTimeStart] = useState("00:00 AM")
+const [timeEnd,setTimeEnd] = useState("00:00 AM")
+const [isStartTimeVisible, setStartTimeVisibility] = useState(false);
+const [isEndTimeVisible, setEndTimeVisibility] = useState(false);
+
+const showStartTimePicker = () => {
+  setStartTimeVisibility(true);
+};
+
+const hideStartTimePicker = () => {
+  setStartTimeVisibility(false);
+};
+
+const handleConfirm = (time) => {
+  setTimeStart(time)
+  const timeCo = moment(time);
+  setTimeStart(timeCo.format('h:mm A'))
+  hideStartTimePicker();
+};
+
+
+const showEndTimePicker = () => {
+  setEndTimeVisibility(true);
+};
+
+const hideEndTimePicker = () => {
+  setEndTimeVisibility(false);
+};
+
+const handleConfirm2 = (time) => {
+  setTimeEnd(time)
+  const timeCo = moment(time);
+  setTimeEnd(timeCo.format('h:mm A'))
+  hideEndTimePicker();
+};
+
+
+
+
+
   return (
     <SafeAreaView style={{ flex: 1,
       paddingTop: StatusBar.currentHeight,}}>
        
-
+      {/* Form - kyle */}
        <View style={{display:show,height:hp(100),width:wp(100),position: "absolute",zIndex:9,backgroundColor:"rgba(214, 214, 214, 0.7)",alignItems:"center",justifyContent:"center"}}>
-          <View style={{height:"80%",width:"90%",backgroundColor:"white",borderRadius:10,alignItems:"center",justifyContent:"center"}}>
-              <View style={{height:"98%",width:"90%",backgroundColor:"white"}}>
+          <View style={{height:"60%",width:"90%",backgroundColor:"white",borderRadius:10,alignItems:"center",justifyContent:"center"}}>
+              <View style={{height:"90%",width:"80%",backgroundColor:"white"}}>
                 
                 <View style={{flexDirection:"row",height:"7%",width:"100%", backgroundColor:"white",alignItems:"center",justifyContent:"space-between"}}>
                           
@@ -62,8 +102,8 @@ useEffect(()=>{
                     <IntputField
                       label="Schedule Name"
                       placeholder="Schedule Name"
-                      // value={email}
-                      // onChangeText={setemail}
+                      value={title}
+                      onChangeText={setTitle}
                       // warning={warning}
                       // warningColor={warningColor}
                       />
@@ -71,41 +111,82 @@ useEffect(()=>{
                               <IntputField
                                 label="Location"
                                 placeholder="Location"
-                                // value={email}
-                                // onChangeText={setemail}
+                                value={location}
+                                onChangeText={setLocation}
                                 // warning={warning}
                                 // warningColor={warningColor}
                                 />
                  <ModalDropdown
-                    defaultValue='Adopt now'
+                    defaultValue='Select Day'
                     options={['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']}
-
-                    value={setSelected}
+              
+                    
                     textStyle={{  fontSize:16}}
-                    onSelect={setSelected}
+                    onSelect={setSelectedday}
                     dropdownStyle={{width:"80%"}}
                     dropdownTextStyle={{borderColor:"gray",borderWidth:.3}}
                     style={{width:"100%",borderWidth:.9,paddingTop:10,paddingBottom:10,borderRadius:5}}
                   
                   />
-                                      <TouchableHighlight
-                                      style={{height:30,width:50,backgroundColor:"gray",alignItems:"center",justifyContent:"center",borderRadius:4}}
+                                      
+                                          
+                                         
+                                       
+
+                                          <View style={{width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
+                                            <View style={{alignItems:"center",justifyContent:"center"}}>
+                                              <Text style={{fontSize:20,paddingVertical:10}}>{`${timeStart}`}</Text>
+                                              <Button title="Set Time Start" onPress={showStartTimePicker} />
+                                              
+                                              <DateTimePickerModal
+                                                isVisible={isStartTimeVisible}
+                                                mode="time"
+                                                onConfirm={handleConfirm}
+                                                onCancel={hideStartTimePicker}
+                                              /> 
+                                            </View>
+                                            <View style={{alignItems:"center",justifyContent:"center"}}>
+                                              <Text style={{fontSize:20,paddingVertical:10}}>{`${timeEnd}`}</Text>
+                                              <Button title="Set Time Start" onPress={showEndTimePicker} />
+                                              
+                                              <DateTimePickerModal
+                                                isVisible={isEndTimeVisible}
+                                                mode="time"
+                                                onConfirm={handleConfirm2}
+                                                onCancel={hideEndTimePicker}
+                                              /> 
+                                            </View>
+                                              
+                                            
+                                          </View>
+                                        <View style={{width:"100%",height:"30%",alignItems:"center",justifyContent:"center"}}>
+                                        <TouchableHighlight
+                                      style={{height:60,width:90,backgroundColor:"#fcb040",alignItems:"center",justifyContent:"center",borderRadius:4}}
                                           activeOpacity={.5}
                                           underlayColor="none"
                                           onPress={()=>{dispatch(addSchedule({
-                                            "title": " Mag Study ",
-                                            "location": "Library",
-                                            "day": "WED",
-                                            "time": "7:00am - 9:00am",
+                                            "title": title,
+                                            "location": location,
+                                            "day": `${['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][selectedday]}`,
+                                            "time": `${timeStart} -${timeEnd} `,
                                           }))
+                                          setTitle("")
+                                          setLocation("")
+                                          setSelectedday("")
+                                          setTimeStart("00:00 AM")
+                                          setTimeEnd("00:00 AM")
                                           setShow("none")
                                         
                                         }}
                                           
                                           >
-                                            <Text style={{color:"#ffffff"}}>Set</Text>
+                                            <Text style={{color:"#ffffff",fontSize:16,textAlign:"center"}}>Set Schedule</Text>
                                           </TouchableHighlight>
-                    
+
+                                        </View>
+                                         
+                                          
+                                          
 
                 </View>
                
@@ -113,6 +194,8 @@ useEffect(()=>{
 
           </View>
        </View>
+
+        {/* Form - kyle */}
       <View
           style={{
             position: "absolute",
@@ -180,7 +263,7 @@ useEffect(()=>{
                   transform: [{ translateY: -10 }],
                 }}
               >
-               @ {credentials.email.slice(0,15)}
+               {credentials.email.slice(0,15)}
               </Text>
             </View>
             <View>

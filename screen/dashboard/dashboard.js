@@ -6,7 +6,8 @@ import {
 import {
   StyleSheet,
   View,
-  Image
+  Image,
+  SafeAreaView,StatusBar
 } from "react-native";
 import { SearchField } from "../../components/inputs/search";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -24,6 +25,7 @@ export const Dashboard = ({ navigation }) => {
 
 
   const [buildingSearch, setBuildingSearch] = useState("");
+  const [scaleVal, setScaleVal] = useState(.8);
   const [roomSearch, setRoomSearch] = useState("");
   const [roomfloor, setRoomfloor] = useState("");
   const [roomblock, setRoomblock] = useState("");
@@ -89,26 +91,32 @@ export const Dashboard = ({ navigation }) => {
   });
 
   return (
-    <KeyboardAwareScrollView style={{ height: hp(100) }}>
+    <SafeAreaView style={{ flex: 1,
+      paddingTop: StatusBar.currentHeight,}}>
+
+
+
+    <KeyboardAwareScrollView >
       <View style={{position:"absolute",height:hp(35),width:wp(100),zIndex:10,alignItems:"flex-start",justifyContent:"flex-end"}}>
         <Calendar/>
       </View>
-       
+      <View
+          style={styles.nav}
+        >
+          <Navigation
+            onPressProfile={() => {
+              navigation.navigate("Profile");
+            }}
+            onPressHome={() => {
+              navigation.navigate("Dashboard");
+            }}
+            homeICON={require("../../assets/img/home-icon-active.png")}
+            profileICON={require("../../assets/img/profile-icon.png")}
+          />
+        </View>
       <View style={styles.container}>
       
-          <View style={styles.nav} >
-            <Navigation
-           
-              onPressProfile={() => {
-                navigation.navigate("Profile");
-              }}
-              onPressHome={() => {
-                navigation.navigate("Dashboard");
-              }}
-              homeICON = {require('../../assets/img/home-icon-active.png')}
-              profileICON = {require('../../assets/img/profile-icon.png')}
-            />
-          </View>
+        
         <View style={styles.screen1}>
          
           <View
@@ -164,7 +172,7 @@ export const Dashboard = ({ navigation }) => {
           <Draggable  x={wp(10)} y={hp(20)} 
            maxX={wp(180)}
             renderColor='white'>
-            <View>
+            <View style={{transform:[{scale:scaleVal}]}}>
              
               <Map3d 
               building = {buildingSearch}
@@ -191,10 +199,10 @@ export const Dashboard = ({ navigation }) => {
           >
             <Map2d
               ZoomOutPress={() => {
-                ZoomOut();
+                setScaleVal(scaleVal - .1)
               }}
               ZoomInPress={() => {
-                ZoomIn();
+                setScaleVal(scaleVal + .1)
               }}
               StreetViewPress={() => {
                 console.log("street View");
@@ -207,5 +215,6 @@ export const Dashboard = ({ navigation }) => {
         </View>
         </View>
     </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
