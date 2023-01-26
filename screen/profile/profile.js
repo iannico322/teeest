@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const credentials = useSelector((state)=>state.user.value);
   const schedules = useSelector((state) => state.sched.value)
-  const [show,setShow] = useState("flex")
+  const [show,setShow] = useState("none")
   
   const data = [
     {key:'1', value:'SUN'},

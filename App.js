@@ -10,7 +10,7 @@ import Profile from './screen/profile/profile';
 
 import store from "./cache/store";
 import { Provider } from "react-redux";
-
+import { Guest } from './screen/dashboard/guest';
 export default function App() {
   //College Cheetah Inc.
 
@@ -22,12 +22,14 @@ export default function App() {
      
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false,customAnimationOnGesture:true,animation:"slide_from_right"} }name="Profile" component={Profile} />
+      
+     
       <Stack.Screen options={{ headerShown: false ,customAnimationOnGesture:true,animation:"slide_from_right"} }  name="MainScreen" component={MainScreen} /> 
         
       <Stack.Screen options={{ headerShown: false ,customAnimationOnGesture:true,animation:"slide_from_bottom"} } name="Login" component={LoginPage} />
-     
+      <Stack.Screen options={{ headerShown: false ,customAnimationOnGesture:true,animation:"slide_from_right"} }  name="Guest" component={Guest} /> 
         <Stack.Screen options={{ headerShown: false,customAnimationOnGesture:true,animation:"slide_from_right"} }name="Dashboard" component={Dashboard} />
+        <Stack.Screen options={{ headerShown: false,customAnimationOnGesture:true,animation:"slide_from_right"} }name="Profile" component={Profile} />
         
         <Stack.Screen options={{ headerShown: false ,customAnimationOnGesture:true,animation:"slide_from_bottom"} } name="Registration" component={Registration} />
         

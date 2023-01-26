@@ -12,7 +12,7 @@ export const MainScreen = ({ navigation }) => {
   //Scroll up function
   const travelTop = () => {
     Animated.timing(cloudTransition, {
-      toValue: -560,
+      toValue: -590,
       duration: 1200,
       easing: Easing.ease,
       useNativeDriver: true,
@@ -26,7 +26,7 @@ export const MainScreen = ({ navigation }) => {
     }).start();
 
     Animated.timing(boxTransition, {
-      toValue: 260,
+      toValue: 360,
       duration: 1200,
       easing: Easing.ease,
       useNativeDriver: true,
@@ -106,7 +106,7 @@ export const MainScreen = ({ navigation }) => {
               fontSize={17}
               Text="I'm a guest"
               onPress={() => {
-                navigation.navigate("Login");
+                navigation.navigate("Guest");
               }}
             />
           </View>
@@ -133,8 +133,8 @@ export const MainScreen = ({ navigation }) => {
         />
         <Image
           style={{
-            transform: [{ translateY: -hp(5) }],
-            height: hp(31),
+            transform: [{ translateY: -hp(5)},{scale:1.7}],
+            height: hp(30),
             width: wp(100),
             resizeMode: "contain",
           }}
